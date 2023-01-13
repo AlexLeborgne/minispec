@@ -30,7 +30,11 @@ public class JavaGenerator extends Visitor {
     public void visitEntity(Entity e) {
 
         for (Attribute a : e.getAttributes()){
-            attribut = attribut + "  " + a.getType() + " " + a.getName() + ";\n";
+            attribut = attribut + "  " + a.getType() + " " + a.getName();
+            if(!a.getDefaultvalue().isEmpty()){
+                attribut = attribut + " = " + a.getDefaultvalue();
+            }
+            attribut = attribut + ";\n";
             getter = getter +  "  public " + a.getType() + " get"+a.getName().substring(0,1).toUpperCase() + a.getName().substring(1) + "(){ return " + a.getName() + "; }\n";
             setter = setter + "  public void set"+a.getName().substring(0,1).toUpperCase() + a.getName().substring(1) + "(" + a.getType() + " " + a.getName() +"){ this." + a.getName() + " = " + a.getName() + "; }\n";
             a.accept(this);
