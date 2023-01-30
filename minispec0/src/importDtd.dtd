@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!ELEMENT Root (java_code)>
+<!ATTLIST Root model CDATA #REQUIRED>
+<!ELEMENT java_code (model+, primitive+)>
+<!ELEMENT model EMPTY>
+<!ATTLIST model name CDATA #REQUIRED>
+<!ATTLIST model package CDATA #REQUIRED>
+<!ELEMENT primitive EMPTY>
+<!ATTLIST primitive name CDATA #REQUIRED>
+<!ATTLIST primitive type CDATA #REQUIRED>
+<!ATTLIST primitive package CDATA #IMPLIED>
