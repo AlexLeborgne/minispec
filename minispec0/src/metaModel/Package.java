@@ -4,30 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Package implements MinispecElement {
+    private String packageName;
 
-    List<PrimitiveName> primitiveNames;
-    List<Model> models;
-
-    public Package() {
-        this.primitiveNames = new ArrayList<>();
-        this.models = new ArrayList<>();
+    public String getPackageName() {
+        return packageName;
     }
 
-    public void addPrimitiveName(PrimitiveName pn) {
-        this.primitiveNames.add(pn);
+    public void setPackageName(String packageName) {
+        this.packageName = packageName;
     }
-
-    public void addModel(Model m) {
-        this.models.add(m);
-    }
-
-    public List<PrimitiveName> getPrimitiveNames() {
-        return primitiveNames;
-    }
-
-    public List<Model> getModels() {
-        return models;
-    }
-
-
 }

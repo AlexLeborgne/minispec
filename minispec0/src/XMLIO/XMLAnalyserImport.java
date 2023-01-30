@@ -1,9 +1,7 @@
 package XMLIO;
 
-import metaModel.MinispecElement;
-import metaModel.Model;
+import metaModel.*;
 import metaModel.Package;
-import metaModel.PrimitiveName;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -14,37 +12,46 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.*;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 
 public class XMLAnalyserImport {
 
-  protected Map<String, MinispecElement> minispec;
+  protected Map<String, Package> listPackage;
+  protected Map<String, PrimitiveName> listPrimitiveName;
+  protected Map<String, MinispecElement> minispecIndex;
   // Map des elements XML
-  protected Map<String, Element> xmlElement;
+  protected Map<String, Element> xmlElementIndex;
 
   public XMLAnalyserImport() {
-    this.minispec = new HashMap<String, MinispecElement>();
-    this.xmlElement = new HashMap<String, Element>();
+    this.listPackage = new HashMap<String, Package>();
+    this.listPrimitiveName = new HashMap<String, PrimitiveName>();
+    this.minispecIndex = new HashMap<String, MinispecElement>();
+    this.xmlElementIndex = new HashMap<String, Element>();
+  }
+
+  public void packageFromElement(Element e) {
+    Package pack = new Package();
+    pack.setPackageName(e.getAttribute("package"));
+    listPackage.put(e.getAttribute("name"), pack);
+  }
+
+  public void primitiveNameFromElement(Element e) {
+    PrimitiveName primitiveName = new PrimitiveName();
+    primitiveName.setName(e.getAttribute("package"));
+    listPrimitiveName.put(e.getAttribute("name"), primitiveName);
   }
 
   protected MinispecElement minispecElementFromXmlElement(Element e) {
-    String name = e.getAttribute("name");
-    MinispecElement result = this.minispec.get(name);
-    if (result != null) return result;
     String tag = e.getTagName();
-    if (tag.equals("Model")) {
-      result = modelFromElement(e);
-    } else {
-      result = primitiveNameFromElement(e);
+    if (tag.equals("model")) {
+      packageFromElement(e);
+    } else if (tag.equals("primitive")) {
+      primitiveNameFromElement(e);
     }
-    this.minispec.put(name, result);
-    return result;
+    return null;
   }
-
 
   protected void firstRound(Element el) {
     NodeList nodes = el.getChildNodes();
@@ -53,7 +60,7 @@ public class XMLAnalyserImport {
       if (n instanceof Element) {
         Element child = (Element) n;
         String name = child.getAttribute("name");
-        this.xmlElement.put(name, child);
+        this.xmlElementIndex.put(name, child);
       }
     }
   }
@@ -68,39 +75,24 @@ public class XMLAnalyserImport {
       }
     }
   }
-
-  protected Model modelFromElement(Element e) {
-    String name = e.getAttribute("name");
-    String package_ = e.getAttribute("package");
-    Model model = new Model();
-    model.setName(name);
-    model.setPackage(package_);
-    return model;
-  }
-
-  protected PrimitiveName primitiveNameFromElement(Element e) {
-    String name = e.getAttribute("name");
-    String type = e.getAttribute("type");
-    String package_ = e.getAttribute("package");
-    PrimitiveName primitiveName = new PrimitiveName();
-    primitiveName.setName(name);
-    primitiveName.setType(type);
-    primitiveName.setPackage(package_);
-    return primitiveName;
-  }
-  public Package getModelFromDocument(Document document) {
+  public ModelPackage getModelFromDocument(Document document) {
     Element e = document.getDocumentElement();
+
+    ModelPackage modelPackage = new ModelPackage();
 
     firstRound(e);
 
     secondRound(e);
 
-    Package aPackage = (Package) this.minispec.get(e.getAttribute("model"));
+    //Package aPackage = (Package) this.minispecIndex.get(e.getAttribute("model"));
 
-    return aPackage;
+    modelPackage.setListPackage(this.listPackage);
+    modelPackage.setListPrimitiveName(this.listPrimitiveName);
+
+    return modelPackage;
   }
 
-  public Package getModelFromInputStream(InputStream stream) {
+  public ModelPackage getModelFromInputStream(InputStream stream) {
     try {
       // création d'une fabrique de documents
       DocumentBuilderFactory fabrique = DocumentBuilderFactory.newInstance();
@@ -123,12 +115,7 @@ public class XMLAnalyserImport {
     return null;
   }
 
-  public Package getModelFromString(String contents) {
-    InputStream stream = new ByteArrayInputStream(contents.getBytes());
-    return getModelFromInputStream(stream);
-  }
-
-  public Package getModelFromFile(File file) {
+  public ModelPackage getModelFromFile(File file) {
     InputStream stream = null;
     try {
       stream = new FileInputStream(file);
@@ -139,7 +126,7 @@ public class XMLAnalyserImport {
     return getModelFromInputStream(stream);
   }
 
-  public Package getModelFromFilenamed(String filename) {
+  public ModelPackage getModelFromFilenamed(String filename) {
     File file = new File(filename);
     return getModelFromFile(file);
   }

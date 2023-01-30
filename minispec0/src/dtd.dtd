@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!ELEMENT Root (Model, Entity+, Attibute+)>
+<!ATTLIST Root model CDATA #REQUIRED>
+<!ELEMENT Model EMPTY>
+<!ATTLIST Model id CDATA #REQUIRED>
+<!ATTLIST Model name CDATA #REQUIRED>
+<!ELEMENT Entity (Attibute+)>
+<!ATTLIST Entity model CDATA #REQUIRED>
+<!ATTLIST Entity id CDATA #REQUIRED>
+<!ATTLIST Entity name CDATA #REQUIRED>
+<!ELEMENT Attibute EMPTY>
+<!ATTLIST Attibute entity CDATA #REQUIRED>
+<!ATTLIST Attibute id CDATA #REQUIRED>
+<!ATTLIST Attibute name CDATA #REQUIRED>
+<!ATTLIST Attibute type (String|Integer) #REQUIRED>
+<!ATTLIST Attibute defaultValue CDATA #ZeroOrOne>
