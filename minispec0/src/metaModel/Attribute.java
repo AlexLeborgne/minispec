@@ -4,6 +4,7 @@ public class Attribute implements MinispecElement{
 
     String name;
     String type;
+    String defaultvalue;
 
     public Attribute() {
     }
@@ -26,5 +27,13 @@ public class Attribute implements MinispecElement{
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public String getDefaultvalue() {
+        return defaultvalue;
+    }
+
+    public void setDefaultvalue(String defaultvalue) {
+        this.defaultvalue = defaultvalue;
     }
 }

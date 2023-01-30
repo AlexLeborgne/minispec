@@ -6,8 +6,8 @@
 	<!-- 	exemple : le model de l'entite #30 est pointé par son attribut model avec #1  -->
 	<Model id="#1" name="Model" />
 	<Entity model="#1" id="#20" name="Balise"/>
-	<Attibute entity="#20" id="#201" name="nom" type="String" />
-	<Attibute entity="#20" id="#202" name="id" type="Integer" />
+	<Attibute entity="#20" id="#201" name="position" type="Point" defaultvalue="Point(0,0)"/>
+	<Attibute entity="#20" id="#202" name="id" type="Integer" defaultvalue="nextId()"/>
 	<Entity model="#1" id="#30" name="Satellite"/>
 	<Attibute entity="#30" id="#301" name="nom" type="String" />
 </Root>

@@ -21,6 +21,7 @@ public class Model implements MinispecElement {
 	public void addEntity(Entity e) {
 		this.entities.add(e);
 	}
+
 	public List<Entity> getEntities() {
 		return entities;
 	}

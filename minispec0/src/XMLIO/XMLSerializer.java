@@ -7,6 +7,7 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
+import metaModel.Attribute;
 import org.w3c.dom.Attr;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -68,6 +69,9 @@ public class XMLSerializer extends Visitor {
 		elem.setAttributeNode(attr);
 		this.root.appendChild(elem);
 		elements.add(elem);
+		for (Attribute n : e.getAttributes()){
+			n.accept(this);
+		}
 	}
 	
 	@Override
@@ -81,6 +85,16 @@ public class XMLSerializer extends Visitor {
 		for (Entity n : e.getEntities()) {
 			n.accept(this);
 		}
+	}
+
+	@Override
+	public void visitAttribute(Attribute e) {
+		super.visitAttribute(e);
+		Element elem = this.doc.createElement("Attribute");
+		this.addIdToElement(elem);
+		this.maybeUpdateRootFrom(elem);
+		this.root.appendChild(elem);
+		elements.add(elem);
 	}
 
 

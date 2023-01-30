@@ -45,9 +45,11 @@ public class XMLAnalyser {
 	protected Attribute attributeFromElement(Element e) {
 		String name = e.getAttribute("name");
 		String type = e.getAttribute("type");
+		String defaultvalue = e.getAttribute("defaultvalue");
 		Attribute attribute = new Attribute();
 		attribute.setName(name);
 		attribute.setType(type);
+		attribute.setDefaultvalue(defaultvalue);
 		Entity entity = (Entity) minispecElementFromXmlElement(this.xmlElementIndex.get(e.getAttribute("entity")));
 		entity.addAttribute(attribute);
 		return attribute;
