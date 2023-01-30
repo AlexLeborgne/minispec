@@ -8,6 +8,7 @@ import metaModel.Visitor;
 public class JavaGenerator extends Visitor {
 
     String result = "";
+    String imports = "";
     String declaration;
     String attribut;
     String getter;

@@ -1,20 +1,20 @@
 package metaModel;
 
-public class PrimitiveName {
+public class PrimitiveName implements MinispecElement {
 
-    String nom;
+    String name;
     String type;
-    String spackage;
+    String package_;
 
     public PrimitiveName() {
     }
 
-    public String getNom() {
-        return nom;
+    public String getName() {
+        return name;
     }
 
-    public void setNom(String nom) {
-        this.nom = nom;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getType() {
@@ -25,11 +25,11 @@ public class PrimitiveName {
         this.type = type;
     }
 
-    public String getSpackage() {
-        return spackage;
+    public String getPackage() {
+        return package_;
     }
 
-    public void setSpackage(String spackage) {
-        this.spackage = spackage;
+    public void setPackage(String package_) {
+        this.package_ = package_;
     }
 }

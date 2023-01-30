@@ -7,6 +7,8 @@ public class Model implements MinispecElement {
 
 	List<Entity> entities;
 	String name;
+
+	String package_;
 	
 	public Model () {
 		this.entities = new ArrayList<>();
@@ -29,5 +31,13 @@ public class Model implements MinispecElement {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public String getPackage() {
+		return package_;
+	}
+
+	public void setPackage(String package_) {
+		this.package_ = package_;
 	}
 }
